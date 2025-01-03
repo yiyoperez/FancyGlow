@@ -37,6 +37,7 @@ public class MainConfigManager {
     private String fillMaterialName;
     private String colorLore;
     private String disabledWorldMessage;
+    private boolean autoTag;
 
 
     // Load the configuration
@@ -47,9 +48,12 @@ public class MainConfigManager {
     }
 
     // Load the messages from the config into variables
-    public void loadConfig(){
+    public void loadConfig() {
         FileConfiguration configuration = configFile.getConfig();
         boolean nicknameColor = configuration.getBoolean("Options.Color_Nickname"); //TODO Use this?
+
+        autoTag = configuration.getBoolean("Auto_Tag");
+
         disabledWorldMessage = configuration.getString("Messages.Disabled_World_Message");
         noPermissionMessage = configuration.getString("Messages.No_Permission");
         reloadConfigMessage = configuration.getString("Messages.Reload_Message");
@@ -82,99 +86,133 @@ public class MainConfigManager {
         fillMaterialName = configuration.getString("Inventory.Items.Fill_Material_Name");
     }
 
-    public void reloadConfig(){
+    public void reloadConfig() {
         configFile.reloadConfig();
         loadConfig();
     }
 
     // Methods to get the value from the config
-    public String getDisabledWorldMessage(){ return disabledWorldMessage    ; }
-    public String getNoPermissionMessage(){
+    public String getDisabledWorldMessage() {
+        return disabledWorldMessage;
+    }
+
+    public String getNoPermissionMessage() {
         return noPermissionMessage;
     }
-    public String getReloadConfigMessage(){
+
+    public String getReloadConfigMessage() {
         return reloadConfigMessage;
     }
-    public String getEnableGlow(){
+
+    public String getEnableGlow() {
         return enableGlow;
     }
-    public String getDisableGlow(){
+
+    public String getDisableGlow() {
         return disableGlow;
     }
-    public String getInventoryTitle(){
+
+    public String getInventoryTitle() {
         return inventoryTitle;
     }
-    public String getAquaName(){
+
+    public String getAquaName() {
         return aquaName;
     }
-    public String getRedName(){
+
+    public String getRedName() {
         return redName;
     }
-    public String getDarkRedName(){
+
+    public String getDarkRedName() {
         return darkRedName;
     }
-    public String getBlueName(){
+
+    public String getBlueName() {
         return blueName;
     }
-    public String getGreenName(){
+
+    public String getGreenName() {
         return greenName;
     }
-    public String getDarkGreenName(){
+
+    public String getDarkGreenName() {
         return darkGreenName;
     }
-    public String getPinkName(){
+
+    public String getPinkName() {
         return pinkName;
     }
-    public String getPurpleName(){
+
+    public String getPurpleName() {
         return purpleName;
     }
-    public String getDarkGrayName(){
+
+    public String getDarkGrayName() {
         return darkGrayName;
     }
-    public String getGrayName(){
+
+    public String getGrayName() {
         return grayName;
     }
-    public String getBlackName(){
+
+    public String getBlackName() {
         return blackName;
     }
-    public String getWhiteName(){
+
+    public String getWhiteName() {
         return whiteName;
     }
-    public String getDarkAquaName(){
+
+    public String getDarkAquaName() {
         return darkAquaName;
     }
-    public String getDarkBlueName(){
+
+    public String getDarkBlueName() {
         return darkBlueName;
     }
-    public String getGoldName(){
+
+    public String getGoldName() {
         return goldName;
     }
-    public String getYellowName(){
+
+    public String getYellowName() {
         return yellowName;
     }
-    public String getHeadName(){
+
+    public String getHeadName() {
         return headName;
     }
-    public String getHeadLore(){
+
+    public String getHeadLore() {
         return headLore;
     }
-    public String getColorLore(){
+
+    public String getColorLore() {
         return colorLore;
     }
-    public String getFillMaterialName(){
+
+    public String getFillMaterialName() {
         return fillMaterialName;
     }
-    public String getGlowStatusTrue(){
+
+    public String getGlowStatusTrue() {
         return glowStatusTrue;
     }
-    public String getGlowStatusFalse(){
+
+    public String getGlowStatusFalse() {
         return glowStatusFalse;
     }
-    public String getEnderName(){
+
+    public String getEnderName() {
         return rainbowName;
     }
-    public String getEnderLore(){
+
+    public String getEnderLore() {
         return rainbowLore;
     }
 
+    public boolean isAutoTag() {
+        return autoTag;
+    }
 }
