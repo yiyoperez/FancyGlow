@@ -11,6 +11,10 @@ import hhitt.fancyglow.managers.GlowManager;
 import hhitt.fancyglow.managers.PlayerGlowManager;
 import hhitt.fancyglow.utils.FancyGlowPlaceholder;
 import hhitt.fancyglow.utils.MessageUtils;
+import me.neznamy.tab.api.TabAPI;
+import me.neznamy.tab.api.TabPlayer;
+import me.neznamy.tab.api.event.player.PlayerLoadEvent;
+import me.neznamy.tab.api.nametag.NameTagManager;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
@@ -47,6 +51,9 @@ public final class FancyGlow extends JavaPlugin {
         mainConfigManager = new MainConfigManager(this);
         mainConfigManager.loadConfig();
 
+        // Hook to TAB.
+        tabHook();
+
         // Init managers
         glowManager = new GlowManager(this);
         playerGlowManager = new PlayerGlowManager(this);
@@ -82,6 +89,24 @@ public final class FancyGlow extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new PlayerQuitListener(this), this);
         getServer().getPluginManager().registerEvents(new HeadClickListener(this), this);
         getServer().getPluginManager().registerEvents(new PlayerChangeWorldListener(this), this);
+    }
+
+    private void tabHook() {
+        if (getServer().getPluginManager().getPlugin("TAB") != null) {
+            getLogger().info("TAB has been found, using it.");
+
+            // Register tab listener.
+            TabAPI.getInstance().getEventBus().register(PlayerLoadEvent.class, event -> {
+                // Ignore if option not enabled.
+                if (!getMainConfigManager().isAutoTag()) return;
+
+                TabPlayer player = event.getPlayer();
+                NameTagManager nameTagManager = TabAPI.getInstance().getNameTagManager();
+
+                String originalPrefix = nameTagManager.getOriginalPrefix(player);
+                nameTagManager.setPrefix(player, originalPrefix + "%fancyglow_color%");
+            });
+        }
     }
 
     public MainConfigManager getMainConfigManager() {
